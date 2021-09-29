@@ -13,6 +13,7 @@ void Setting(Animal *a)
 
 int main()
 {
+    //std::tuple範例
     string name, area;
     int age, weight, high;
     Animal a;
@@ -30,4 +31,6 @@ int main()
     Setting(&a);
     std::tie(name, area, age, weight, high) = a.GetAnimal();
     cout << "名稱:" << name << "|地區:" << area << "|年齡:" << age << "|重量(kg):" << weight << "|長度(m):" << high << endl;
+
+    //std::map範例
 }
