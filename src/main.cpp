@@ -2,6 +2,7 @@
 #include <map>
 
 #include "animal.h"
+#include "sea.h"
 
 std::map<std::string, Animal> noahs_ark;
 
@@ -77,4 +78,8 @@ int main()
     {
         cout << "方舟內沒有找到該動物" << endl;
     }
+
+    // WIP: 實做整合2個Class
+    Sea aa;
+    aa.SetAnimal("遠古巨獸", "目", "怪獸之", "背鰭");
 }
