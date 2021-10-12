@@ -50,9 +50,9 @@ int main()
     a.PrintMap();
     a.FindMap("海豚");
 
-
     // WIP: 實做整合2個Class
-    Sea aa;
-    aa.SetAnimal("怪獸之", "背鰭");
-    
+    Sea godzilla;
+    godzilla.SetAnimal("哥吉拉", "地心", 0, 96340, 119.8);
+    godzilla.SetSea("怪獸之王", "核能背鰭");
+    godzilla.Print();
 }

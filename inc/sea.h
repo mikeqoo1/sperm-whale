@@ -9,15 +9,12 @@ class Sea : public Animal
 public:
     Sea();
     ~Sea();
-    void SetAnimal(string 目, string 科, string feature, string treasure);
-    void Set目(string 目);
-    void Set科(string 科);
+    void SetSea(string feature, string treasure);
     void SetFeature(string feature);
     void SetTreasure(string treasure);
+    void Print();
 
 private:
-    string 目;       //目
-    string 科;       //科
     string feature;  //特性
     string treasure; //掉寶
 };
