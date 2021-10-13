@@ -50,9 +50,24 @@ int main()
     a.PrintMap();
     a.FindMap("海豚");
 
-    // WIP: 實做整合2個Class
+    //子類別的範例
     Sea godzilla;
     godzilla.SetAnimal("哥吉拉", "地心", 0, 96340, 119.8);
-    godzilla.SetSea("怪獸之王", "核能背鰭");
-    godzilla.Print();
+    godzilla.SetSea("怪獸之王", "核能背鰭", 99999);
+    godzilla.Print(); //多載
+
+    Sea kong;
+    kong.SetAnimal("金剛", "骷髏島", 0, 0, 102);
+    kong.SetSea("巨獸種族", "無", 88888);
+    kong.Print(); //多載
+
+    //運算子多載
+    Sea tempaaa;
+    tempaaa = godzilla + kong;
+    tempaaa.Print();
+
+    if (godzilla > kong)
+    {
+        cout << "哥吉拉比金剛厲害" << endl;
+    }
 }
