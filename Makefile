@@ -23,7 +23,7 @@ DEBUG=-g
 SRC=./src/
 
 MAIN_FILE=$(SRC)main.cpp
-DEFAULT_FILE=$(SRC)animal.cpp
+DEFAULT_FILE=$(SRC)animal.cpp $(SRC)sea.cpp 
 
 MAIN_OUTPUT=animal.out
 
