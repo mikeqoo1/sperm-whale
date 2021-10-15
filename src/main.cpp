@@ -63,8 +63,14 @@ int main()
 
     //運算子多載
     Sea tempaaa;
+    string godzilla_name, kong_name;
+    godzilla_name = std::get<0>(godzilla.GetAnimal());
+    kong_name = std::get<0>(kong.GetAnimal());
+    godzilla.GetAnimal();
     tempaaa = godzilla + kong;
-    tempaaa.Print();
+    std::cout << "Power合併=" << tempaaa.GetPower() << std::endl;
+    std::cout << "Name=" << godzilla_name << std::endl;
+    std::cout << "Name=" << kong_name << std::endl;
 
     if (godzilla > kong)
     {

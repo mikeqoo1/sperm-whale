@@ -11,6 +11,9 @@ public:
     Sea();
     ~Sea();
     void SetSea(string feature, string treasure, int power);
+    string GetFeature();
+    string GetTreasure();
+    int GetPower();
     void SetFeature(string feature);
     void SetTreasure(string treasure);
     void SetPower(int power);

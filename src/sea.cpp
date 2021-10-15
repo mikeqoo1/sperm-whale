@@ -18,6 +18,21 @@ void Sea::SetSea(string feature, string treasure, int power)
     this->power = power;
 }
 
+string Sea::GetFeature()
+{
+    return feature;
+}
+
+string Sea::GetTreasure()
+{
+    return treasure;
+}
+
+int Sea::GetPower()
+{
+    return power;
+}
+
 void Sea::SetFeature(string feature)
 {
     this->feature = feature;
