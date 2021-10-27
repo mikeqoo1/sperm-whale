@@ -1,9 +1,11 @@
 #include <iostream>
 #include <map>
+#include <thread>
+#include <mutex>
 
 #include "animal.h"
 #include "sea.h"
-
+mutex m; //例項化m物件,不要理解為定義變數
 void Setting(Animal *a)
 {
     string name = "抹香鯨";
@@ -12,6 +14,26 @@ void Setting(Animal *a)
     int weight = 50000;
     int high = 20;
     a->SetAnimal(name, area, age, weight, high);
+}
+
+void test_thread_func1(int arg)
+{
+    cout << "我是子執行緒(a_thread), 傳入引數為" << arg << endl;
+    cout << "a_thread子執行緒id為" << this_thread::get_id() << endl;
+    lock_guard<mutex> g1(m); //用此語句替換了m.lock()；lock_guard傳入一個引數時,該引數為互斥量,此時呼叫了lock_guard的建構函式,申請鎖定m
+    cout << "test_thread_func1函式正在改寫變數" << endl;
+    cout << "原始變數為" << arg << endl;
+    cout << "現在變數為" << arg + 2 << endl;
+} //此時不需要寫m.unlock(),g1出了作用域被釋放,自動呼叫解構函式,於是m被解鎖
+
+void test_thread_func2(int arg)
+{
+    cout << "我是子執行緒(b_thread), 傳入引數為" << arg << endl;
+    cout << "b_thread子執行緒id為" << this_thread::get_id() << endl;
+    lock_guard<mutex> g2(m);
+    cout << "test_thread_func2函式正在改寫變數" << endl;
+    cout << "原始變數為" << arg << endl;
+    cout << "現在變數為" << arg + 1 << endl;
 }
 
 int main()
@@ -76,4 +98,14 @@ int main()
     {
         cout << "哥吉拉比金剛厲害" << endl;
     }
+
+    //多執行緒 C++
+    cout << "----------C++ 多執行緒的範例----------" << endl;
+    int wqsaxz = 0;
+    std::thread a_thread(test_thread_func1, wqsaxz);
+    cout << "主執行緒中顯示子執行緒id(a_thread)為" << a_thread.get_id() << endl;
+    std::thread b_thread(test_thread_func2, wqsaxz);
+    cout << "主執行緒中顯示子執行緒id(b_thread)為" << b_thread.get_id() << endl;
+    a_thread.join();
+    b_thread.join();
 }
