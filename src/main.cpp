@@ -38,6 +38,22 @@ void test_thread_func2(int arg)
 
 int main()
 {
+
+    cout << "         \\/        " << endl;
+    cout << "          **********" << endl;
+    cout << "          *    ^^  *" << endl;
+    cout << "          *        *" << endl;
+    cout << "          *****    *" << endl;
+    cout << "              *    *" << endl;
+    cout << "            v-*     *" << endl;
+    cout << "            v-*      *" << endl;
+    cout << "              *       *" << endl;
+    cout << "              *        *" << endl;
+    cout << "              *         *" << endl;
+    cout << "              *          *" << endl;
+    cout << "              *************" << endl;
+    cout << "                __|  __|   " << endl;
+
     //std::tuple範例
     string name, area;
     int age, weight, high;
@@ -108,4 +124,30 @@ int main()
     cout << "主執行緒中顯示子執行緒id(b_thread)為" << b_thread.get_id() << endl;
     a_thread.join();
     b_thread.join();
+
+    //閒來無聊畫個圖
+    cout << "閒來無聊畫個圖" << endl;
+    int i, j, k, m, n;
+    for (i = 1; i <= 5; i++)
+    {
+        //printf("%d", i);
+
+        for (j = 5; j > i; j--)
+        {
+            cout << " ";
+        }
+        for (k = 1; k <= i; k++)
+        {
+            cout << "*";
+        }
+        for (m = 2; m <= i; m++)
+        {
+            cout << "*";
+        }
+        for (n = 5; n > i; n--)
+        {
+            cout << " ";
+        }
+        cout << endl;
+    }
 }
