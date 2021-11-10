@@ -2,6 +2,8 @@
 #include <map>
 #include <thread>
 #include <mutex>
+#include <sys/time.h>
+#include <stdio.h>
 
 #include "animal.h"
 #include "sea.h"
@@ -150,4 +152,20 @@ int main()
         }
         cout << endl;
     }
+
+    //timeval 系統時間轉換秒
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    printf("%ld    %ld\n", tv.tv_usec, tv.tv_sec);
+
+    //time_t
+    time_t now = time(0);
+    cout << "Number of sec since January 1,1970:" << now << endl;
+    tm *ltm = localtime(&now);
+    cout << "Year: " << 1900 + ltm->tm_year << endl
+    cout << "Month: " << 1 + ltm->tm_mon << endl;
+    cout << "Day: " << ltm->tm_mday << endl;
+    cout << "Time: " << 1 + ltm->tm_hour << ":";
+    cout << 1 + ltm->tm_min << ":";
+    cout << 1 + ltm->tm_sec << endl;
 }
