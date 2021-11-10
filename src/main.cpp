@@ -162,7 +162,7 @@ int main()
     time_t now = time(0);
     cout << "Number of sec since January 1,1970:" << now << endl;
     tm *ltm = localtime(&now);
-    cout << "Year: " << 1900 + ltm->tm_year << endl
+    cout << "Year: " << 1900 + ltm->tm_year << endl;
     cout << "Month: " << 1 + ltm->tm_mon << endl;
     cout << "Day: " << ltm->tm_mday << endl;
     cout << "Time: " << 1 + ltm->tm_hour << ":";
