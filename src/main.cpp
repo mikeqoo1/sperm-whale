@@ -3,6 +3,10 @@
 #include <thread>
 #include <mutex>
 #include <sys/time.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <stdio.h>
 
 #include "animal.h"
@@ -56,7 +60,7 @@ int main()
     cout << "              *************" << endl;
     cout << "                __|  __|   " << endl;
 
-    //std::tuple範例
+    // std::tuple範例
     string name, area;
     int age, weight, high;
     Animal a;
@@ -75,18 +79,18 @@ int main()
     std::tie(name, area, age, weight, high) = a.GetAnimal();
     a.Print();
 
-    //std::map範例
+    // std::map範例
     //新增用insert指令
     a.InsertMap(name, a);
 
     //新增用array的方式
-    //noahs_ark["虎鯨"] = b;
+    // noahs_ark["虎鯨"] = b;
     a.SetAnimal("虎鯨", "大海", 10, 6000, 8);
     a.InsertMap("虎鯨", a);
     a.SetAnimal("大白鯊", "大海", 10, 2000, 5);
     a.InsertMap("大白鯊", a);
 
-    //map的遍尋和搜尋
+    // map的遍尋和搜尋
     a.PrintMap();
     a.FindMap("海豚");
 
@@ -132,7 +136,7 @@ int main()
     int i, j, k, m, n;
     for (i = 1; i <= 5; i++)
     {
-        //printf("%d", i);
+        // printf("%d", i);
 
         for (j = 5; j > i; j--)
         {
@@ -153,12 +157,12 @@ int main()
         cout << endl;
     }
 
-    //timeval 系統時間轉換秒
+    // timeval 系統時間轉換秒
     struct timeval tv;
     gettimeofday(&tv, NULL);
     printf("%ld    %ld\n", tv.tv_usec, tv.tv_sec);
 
-    //time_t
+    // time_t
     time_t now = time(0);
     cout << "Number of sec since January 1,1970:" << now << endl;
     tm *ltm = localtime(&now);
@@ -168,4 +172,44 @@ int main()
     cout << "Time: " << 1 + ltm->tm_hour << ":";
     cout << 1 + ltm->tm_min << ":";
     cout << 1 + ltm->tm_sec << endl;
+
+    //安全術語
+    /*
+    EXP     Exploit          指可利用的點 (漏洞 程式碼之類的)
+    PoC     Proof of Concept 漏洞的概念證明 常見是一段可重複出現漏洞的程式碼
+    payload                  泛指漏洞利用成功後所要做的事情（如Cracker會做一些有害的或者惡性的行為
+    shellcode                payload的一種 讓攻擊者獲得 shell（建立正向/反向shell而得名
+    想象自己是一個特務, 你的目的是監控一個人, 有一天你懷疑目標家的窗戶可能没有關, 於是你上前推了推, 结果推開了, 這是一個 PoC
+    於是你回去了, 開始準備第二天的滲透計畫, 第二天你通過同樣的漏洞渗透進去了他家, 仔细查看了所有的重要文件, 離開時安裝了一個隱蔽的竊聽器
+    這一天你所做的就是一個 Exp, 你在他家所做的行為就是不同的 Payload, 就把竊聽器當作 Shellcode 吧
+    */
+
+    //檢查機器上開啟的Port並列出連線IP
+    cout << "檢查機器上開啟的Port並列出連線IP" << endl;
+    struct sockaddr_in client;
+    int sock;
+
+    client.sin_family = AF_INET;
+    int port = 3306;
+    client.sin_port = htons(port);
+    client.sin_addr.s_addr = inet_addr("192.168.199.236");
+    // client.sin_addr.s_addr = htonl(INADDR_ANY); //指定地址0.0.0.0 這個IP實際上表示不確定地址, 或"所有IP" "任意IP"
+    sock = (int)socket(AF_INET, SOCK_STREAM, 0);
+
+    int result = connect(sock, (struct sockaddr *)&client, sizeof(client));
+
+    if (result == 0)
+    {
+        cout << "該" << port << "有開啟" << endl;
+        // stringstream cmd;
+        // cmd.str("");
+        // cmd.clear();
+        // cmd << "netstat -plan|grep :3306|awk {'print $5'}|cut -d: -f 1|sort|uniq -c|sort -nk 1";
+        string cmd = "netstat -plan|grep :3306|awk {'print $5'}|cut -d: -f 1|sort|uniq -c|sort -nk 1";
+        system(cmd.c_str());
+    }
+    else
+    {
+        cout << "該" << port << "沒有開啟" << endl;
+    }
 }
