@@ -23,7 +23,8 @@ DEBUG=-g
 SRC=./src/
 
 MAIN_FILE=$(SRC)main.cpp
-DEFAULT_FILE=$(SRC)animal.cpp $(SRC)sea.cpp 
+DEFAULT_FILE=$(SRC)animal.cpp $(SRC)sea.cpp
+DISASSEMBLER_FILE=disassembler/test.cpp
 
 MAIN_OUTPUT=animal.out
 
@@ -32,7 +33,17 @@ MAIN_OUTPUT=animal.out
 main:$(DEFAULT_FILE)
 	$(CC) $(FLAG) $(INC) -o $(MAIN_OUTPUT) $(MAIN_FILE) $(DEFAULT_FILE)
 
-all:main test debug db
+
+#-c 只編譯不連結 -E 預處理 -S 只建立assemblely檔
+debug:$(DISASSEMBLER_FILE)
+	$(CC) -c -g $(DISASSEMBLER_FILE)
+	$(CC) -E $(DISASSEMBLER_FILE) -o disassembler/test.i
+	$(CC) -S $(DISASSEMBLER_FILE) -o disassembler/test.a
+	$(CC) test.o -g -o disassembler/test.out
+	objdump -j .text -l -C -S disassembler/test.out >> 逆向工程.txt
+
+all:main debug
 
 clean:
-	rm *.out
+	rm *.out *.o
+	rm disassembler/*.out disassembler/*.o disassembler/*.a disassembler/*.i
